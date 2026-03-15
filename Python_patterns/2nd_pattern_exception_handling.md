@@ -7,7 +7,6 @@ Read numbers from a file and handle invalid data and missing file errors.
 ### Pattern Code
 
 try:
-    
     with open("numbers.txt","r") as f:
         
         for line in f:
