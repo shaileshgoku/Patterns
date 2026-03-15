@@ -7,16 +7,25 @@ Read numbers from a file and handle invalid data and missing file errors.
 ### Pattern Code
 
 try:
+    
     with open("numbers.txt","r") as f:
+        
         for line in f:
+            
             line = line.strip()
+            
             try:
+                
                 number = int(line)
+                
                 print(number)
+            
             except ValueError:
+                
                 print("Invalid number:", line)
 
 except FileNotFoundError:
+    
     print("File not found")
 
 ### Key Ideas
