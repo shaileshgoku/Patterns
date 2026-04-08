@@ -1,0 +1,89 @@
+# 📘 Pattern: State Tracking (Flag Pattern)
+
+## 🧩 Problem Type
+
+* After / Before conditions
+* Event-based problems
+* Sequence tracking
+
+---
+
+## 🧠 Core Idea
+
+Track a condition using a flag variable.
+Once the condition is met, change behavior.
+
+---
+
+## 🔁 Template
+
+```python
+flag = False
+
+for item in data:
+    if condition:
+        flag = True
+    elif flag:
+        # perform action
+```
+
+---
+
+## ⚔️ Variations Covered
+
+1. First even after first odd
+2. First odd after first even
+3. Last even after first odd
+4. Count even after first odd
+
+---
+
+## 🧪 Example
+
+```python
+n = [2,4,1,6,8,3,10]
+
+flag = False
+count = 0
+
+for num in n:
+    if num % 2 != 0:
+        flag = True
+    elif flag:
+        count += 1
+
+print(count)
+```
+
+---
+
+## ⏱ Complexity
+
+* Time: O(n)
+* Space: O(1)
+
+---
+
+## 💡 Key Insight
+
+Use this pattern when:
+
+* "after something happens"
+* "once condition is met"
+
+---
+
+## ❌ Common Mistakes
+
+* Not using flag
+* Ignoring order of events
+* Using extra space unnecessarily
+
+---
+
+## 🚀 Use Cases
+
+* Event streams
+* Logs processing
+* State machines
+* Sequence-based problems
