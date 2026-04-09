@@ -1,0 +1,154 @@
+| a | Pattern   | Cycle | Digits from b | Why                                        | Index rule                           |
+| - | --------- | ----- | ------------- | ------------------------------------------ | ------------------------------------ |
+| 2 | [2,4,8,6] | 4     | last 2 digits | because we compute `b % 4` → need 2 digits | if r == 0 → index = 4 else index = r |
+| 3 | [3,9,7,1] | 4     | last 2 digits | because we compute `b % 4` → need 2 digits | if r == 0 → index = 4 else index = r |
+| 4 | [4,6]     | 2     | last 1 digit  | because we compute `b % 2` → need 1 digit  | if r == 0 → index = 2 else index = r |
+| 5 | [5]       | 1     | none          | because cycle = 1 → always same digit      | index = 1 always                     |
+| 6 | [6]       | 1     | none          | because cycle = 1 → always same digit      | index = 1 always                     |
+| 7 | [7,9,3,1] | 4     | last 2 digits | because we compute `b % 4` → need 2 digits | if r == 0 → index = 4 else index = r |
+| 8 | [8,4,2,6] | 4     | last 2 digits | because we compute `b % 4` → need 2 digits | if r == 0 → index = 4 else index = r |
+| 9 | [9,1]     | 2     | last 1 digit  | because we compute `b % 2` → need 1 digit  | if r == 0 → index = 2 else index = r |
+
+# 🔢 Last Digit of a^b (Large Exponent)
+
+## 🚀 Problem
+
+Given two numbers:
+
+* `a` → base (can be large, given as string)
+* `b` → exponent (very large, given as string)
+
+👉 Find the **last digit of a^b**
+
+---
+
+## 🧠 Key Insight
+
+Instead of computing `a^b` directly (which is inefficient for large `b`), we observe that:
+
+👉 **Last digits follow repeating patterns (cycles)**
+
+---
+
+## 🔁 Patterns of Last Digits
+
+| Last Digit | Pattern   | Cycle Length |
+| ---------- | --------- | ------------ |
+| 2          | [2,4,8,6] | 4            |
+| 3          | [3,9,7,1] | 4            |
+| 4          | [4,6]     | 2            |
+| 5          | [5]       | 1            |
+| 6          | [6]       | 1            |
+| 7          | [7,9,3,1] | 4            |
+| 8          | [8,4,2,6] | 4            |
+| 9          | [9,1]     | 2            |
+
+---
+
+## ⚡ Approach
+
+1. Extract the **last digit of `a`**
+2. Identify the **cycle pattern**
+3. Compute:
+
+   ```
+   b % cycle_length
+   ```
+
+   * If result = 0 → use cycle_length
+4. Return the corresponding element from the pattern
+
+---
+
+## 💡 Optimization
+
+To compute:
+
+```
+b % cycle_length
+```
+
+We only need:
+
+| Cycle Length | Digits Needed from b |
+| ------------ | -------------------- |
+| 1            | none                 |
+| 2            | last 1 digit         |
+| 4            | last 2 digits        |
+
+---
+
+## 🧪 Example
+
+### Input:
+
+```
+a = "3"
+b = "10"
+```
+
+### Steps:
+
+* Pattern → [3,9,7,1]
+* Cycle = 4
+* 10 % 4 = 2
+* Answer = 2nd element → **9**
+
+---
+
+## 🧾 Code (Python)
+
+```python
+def last_digit(a: str, b: str) -> int:
+    if b == "0":
+        return 1
+
+    last = int(a[-1])
+
+    if last in [2,3,7,8]:
+        cycle = 4
+        b_mod = int(b[-2:]) % 4
+        if b_mod == 0:
+            b_mod = 4
+
+    elif last in [4,9]:
+        cycle = 2
+        b_mod = int(b[-1]) % 2
+        if b_mod == 0:
+            b_mod = 2
+
+    elif last == 5:
+        return 5
+
+    elif last == 6:
+        return 6
+
+    pattern_map = {
+        2: [2,4,8,6],
+        3: [3,9,7,1],
+        4: [4,6],
+        7: [7,9,3,1],
+        8: [8,4,2,6],
+        9: [9,1]
+    }
+
+    return pattern_map[last][b_mod - 1]
+```
+
+---
+
+## 🎯 What I Learned
+
+* Pattern recognition > brute force
+* Modulo arithmetic simplifies huge computations
+* Thinking in cycles is a powerful technique in DSA
+
+---
+
+## 🔥 Takeaway
+
+👉 Don’t compute big numbers — **reduce the problem smartly**
+
+---
+
+
