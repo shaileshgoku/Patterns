@@ -1,0 +1,102 @@
+# 🧠 Prime Number Check — Early Termination Pattern
+
+## 📌 Problem Statement
+Given a number `n`, determine whether it is a **prime number**.
+
+A prime number is a number that has exactly **2 divisors**:
+- 1
+- Itself
+
+---
+
+## 🚀 Approach 1: Brute Force
+
+### 💡 Idea
+- Iterate from `1 → n`
+- Count how many numbers divide `n`
+- If count == 2 → Prime
+- Else → Not Prime
+
+### 🧾 Code
+
+```python
+def is_prime(n):
+    count = 0
+    for i in range(1, n+1):
+        if n % i == 0:
+            count += 1
+
+    if count == 2:
+        return True
+    else:
+        return False
+
+Time Complexity
+O(n) → Always checks all numbers (Brute Force Approach)
+⚡ Approach 2: Early Termination (Optimized)
+
+💡 Idea
+Stop checking as soon as divisor count exceeds 2
+No need to complete the full loop
+Reduces unnecessary iterations
+
+def is_prime(n):
+    count = 0
+    for i in range(1, n+1):
+        if n % i == 0:
+            count += 1
+
+        if count > 2:
+            return False
+
+    return True
+
+📊 Time Complexity Analysis
+🔹 Prime Numbers
+Example: 7, 11, 13
+Need to check all values from 1 → n
+Time Complexity: O(n)
+🔹 Non-Prime Numbers
+Loop stops when 3rd divisor is found
+
+Examples:
+
+n = 8 → divisors: 1, 2, 4 → stop early
+n = 100 → divisors: 1, 2, 4 → stop early
+
+👉 Time Complexity: O(k)
+Where:
+
+k = position of the 3rd divisor
+🔹 Best Case
+Example: n = 4
+Stops very early
+O(1)
+🔹 Worst Case
+When number is prime
+O(n)
+🔥 Key Insight
+
+Not all O(n) solutions behave the same in real execution.
+
+Even though worst-case remains O(n),
+this optimization reduces unnecessary iterations.
+
+🧠 Pattern Learned
+✅ Early Termination / Short-Circuiting
+
+Definition:
+Stop computation as soon as the result is determined.
+
+💼 Real-World Applications
+Input validation systems (stop when invalid condition is found)
+Search algorithms (stop when target is found)
+Fraud detection systems (stop when rule is triggered)
+Data processing pipelines (terminate when threshold is reached)
+🚀 Takeaway
+
+Small optimization → Big performance improvement
+
+Always think:
+
+"Can I stop early instead of checking everything?
