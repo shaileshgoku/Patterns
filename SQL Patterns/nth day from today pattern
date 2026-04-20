@@ -1,0 +1,152 @@
+# 🧠 Understanding DAYOFWEEK() and Finding Next Sunday in MySQL
+
+---
+
+## 📌 DAYOFWEEK() Mapping (MySQL)
+
+| Day       | Value |
+|-----------|------|
+| Sunday    | 1    |
+| Monday    | 2    |
+| Tuesday   | 3    |
+| Wednesday | 4    |
+| Thursday  | 5    |
+| Friday    | 6    |
+| Saturday  | 7    |
+
+---
+
+## 🎯 Goal
+
+Given any date,  
+👉 Find **how many days to ADD to reach the next Sunday**
+
+---
+
+## 🍕 Core Idea (Intuition)
+
+We want to reach:
+
+👉 **Sunday = 1**
+
+So the question becomes:
+
+> “Current day → how far from next Sunday?”
+
+---
+
+## 📊 Manual Understanding
+
+### Case 1: Saturday (7)
+
+- Current = 7  
+- Next Sunday = +1 day ✅  
+
+---
+
+### Case 2: Friday (6)
+
+- Current = 6  
+- Next Sunday = +2 days ✅  
+
+---
+
+### Case 3: Monday (2)
+
+- Current = 2  
+- Next Sunday = +6 days ✅  
+
+---
+
+## 🔥 Pattern Observation
+
+👉 Days to add:
+8 - current_day
+
+
+---
+
+## ✅ Verification Table
+
+| Day       | Value | 8 - Value | Correct? |
+|----------|------|-----------|----------|
+| Saturday | 7    | 1         | ✅ |
+| Friday   | 6    | 2         | ✅ |
+| Monday   | 2    | 6         | ✅ |
+
+---
+
+## ⚠️ Edge Case (Important)
+
+### Sunday Case
+
+- Sunday = 1  
+- 8 - 1 = 7  
+
+👉 This means **+7 days (next Sunday)**  
+
+But sometimes we want a cyclic result → so we use modulo.
+
+---
+
+## 💡 Why `% 7` ?
+
+To keep values within a **weekly cycle (0–6)**
+
+Examples:
+7 % 7 = 0
+6 % 7 = 6
+5 % 7 = 5
+
+
+---
+
+## 🔁 Final Formula
+
+```sql
+(8 - DAYOFWEEK(date)) % 7
+Meaning:
+
+Find distance to next Sunday
+Wrap within a week
+
+| Day | Value | 8 - Value | %7 | Days to Add |
+| --- | ----- | --------- | -- | ----------- |
+| Sun | 1     | 7         | 0  | Same day ⚠️ |
+| Mon | 2     | 6         | 6  | ✅           |
+| Tue | 3     | 5         | 5  | ✅           |
+| Wed | 4     | 4         | 4  | ✅           |
+| Thu | 5     | 3         | 3  | ✅           |
+| Fri | 6     | 2         | 2  | ✅           |
+| Sat | 7     | 1         | 1  | ✅           |
+
+Important Rule
+
+If the problem says:
+
+👉 “STRICTLY AFTER”
+
+Then handle Sunday like this:
+CASE 
+  WHEN DAYOFWEEK(date) = 1 THEN 7
+  ELSE (8 - DAYOFWEEK(date))
+END
+
+Final Insight
+
+👉 General formula:
+(Target Day + 7 - Current Day) % 7
+
+For Sunday:
+(1 + 7 - current_day) % 7
+= (8 - current_day) % 7
+
+Takeaway
+This logic works for any day (Monday, Friday, etc.)
+This is a core interview pattern
+Helps in solving calendar-based SQL problems
+
+date_add
+select date_add(curdate(), interval 1 day) from numbers_data;
+
+
