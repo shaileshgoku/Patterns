@@ -149,4 +149,21 @@ Helps in solving calendar-based SQL problems
 date_add
 select date_add(curdate(), interval 1 day) from numbers_data;
 
+output:
+date_add(curdate(), interval 1 day)
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
+'2026-04-21'
 
