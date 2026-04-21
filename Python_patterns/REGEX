@@ -1,0 +1,30 @@
+| Block      | Type       |
+| ---------- | ---------- |
+| `[ ]`      | filter     |
+| `\d`, `\w` | predefined |
+| `.`        | any char   |
+| `+ * {}`   | quantity   |
+
+VERY IMPORTANT
+
+[a-z]+ → lowercase (1 or more)
+\d{3} → exactly 3 digits
+
+Golden Rules (Mind la fix panniko)
+✅ Rule 1:
+
+👉 [ ] → always one block
+
+✅ Rule 2:
+
+👉 + * {} → previous block ku apply aagum
+
+✅ Rule 3:
+
+👉 . ≠ dot
+👉 \. = dot
+
+✅ Rule 4:
+
+👉 always final ah:
+“full string meaning enna?”
